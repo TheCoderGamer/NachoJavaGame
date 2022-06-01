@@ -1,6 +1,8 @@
 package com.thecoder.JavaGame;
 
 import com.thecoder.JavaGame.graphics.Screen;
+import com.thecoder.JavaGame.graphics.level.Level;
+import com.thecoder.JavaGame.graphics.level.RandomLevel;
 import com.thecoder.JavaGame.input.Keyboard;
 import com.thecoder.JavaGame.utils.Logger;
 import javax.swing.JFrame;
@@ -28,6 +30,7 @@ public class Game extends Canvas implements Runnable {
     private Screen screen;
     private JFrame frame;
     private Keyboard key;
+    private Level level;
 
     // Game
     int xPos, yPos;
@@ -57,6 +60,9 @@ public class Game extends Canvas implements Runnable {
         gameLoop = new Thread(this, "GameLoop");
         running = true;
         gameLoop.start();
+
+        // Level
+        level = new RandomLevel(64, 64);
     }
 
     public void stop() {
@@ -119,7 +125,7 @@ public class Game extends Canvas implements Runnable {
 
         // Clear & draw screen
         screen.clear();
-        screen.render(xPos, yPos);
+        level.render(xPos, yPos, screen);
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
         // Clear resoruces & show the buffer

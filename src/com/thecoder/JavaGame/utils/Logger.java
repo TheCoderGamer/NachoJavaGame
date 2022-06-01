@@ -41,6 +41,10 @@ public class Logger {
     public static void log(String message) {
         print(message, null, null);
     }
+    
+    public static void log(int message) {
+        print(message + "", null, null);
+    }
 
     public static void log(String message, Exception e) {
         print(message, null, e);
