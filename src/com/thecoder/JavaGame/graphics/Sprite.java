@@ -1,10 +1,14 @@
 package com.thecoder.JavaGame.graphics;
 
+import java.awt.Color;
+
 public class Sprite {
     
     // Sprites
-    public static Sprite voidTile = new Sprite(16, 0xf0f00f);
-    public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
+    public static Sprite voidTile = new Sprite(16, Color.blue.getRGB());
+    public static Sprite grass1 = new Sprite(16, 0, 0, SpriteSheet.tiles);
+    public static Sprite grass2 = new Sprite(16, 1, 0, SpriteSheet.tiles);
+    public static Sprite grass3 = new Sprite(16, 2, 0, SpriteSheet.tiles);
     
 
     final int SIZE;
@@ -39,7 +43,6 @@ public class Sprite {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				pixels[x + y * width] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.SIZE];
-                System.out.println(pixels[x + y * width]);
 			}
 		}
 	}

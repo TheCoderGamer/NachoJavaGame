@@ -1,5 +1,6 @@
 package com.thecoder.JavaGame;
 
+import com.thecoder.JavaGame.entity.mob.Player;
 import com.thecoder.JavaGame.graphics.Screen;
 import com.thecoder.JavaGame.graphics.level.Level;
 import com.thecoder.JavaGame.graphics.level.RandomLevel;
@@ -29,14 +30,12 @@ public class Game extends Canvas implements Runnable {
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private Screen screen;
     private JFrame frame;
-    private Keyboard key;
+    private Keyboard keyboard;
     private Level level;
-
-    // Game
-    int xPos, yPos;
+    private Player player;
 
     public Game() {
-        Logger.log("Starting game");
+        Logger.log("Starting game...");
 
         // Window settings
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
@@ -53,16 +52,17 @@ public class Game extends Canvas implements Runnable {
         requestFocusInWindow();
 
         // Keyboard settings
-        key = new Keyboard();
-        addKeyListener(key);
+        keyboard = new Keyboard();
+        addKeyListener(keyboard);
 
         // Game loop
         gameLoop = new Thread(this, "GameLoop");
         running = true;
         gameLoop.start();
 
-        // Level
+        // Level & player
         level = new RandomLevel(64, 64);
+        player = new Player(0, 0, keyboard);
     }
 
     public void stop() {
@@ -70,6 +70,7 @@ public class Game extends Canvas implements Runnable {
         try {
             gameLoop.join();
         } catch (InterruptedException e) {
+            Logger.log("Failure to stop game loop");
             e.printStackTrace();
         }
     }
@@ -86,6 +87,7 @@ public class Game extends Canvas implements Runnable {
         int ups = 0;
 
         // Game loop
+        Logger.log("GameLoop Started");
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -125,7 +127,7 @@ public class Game extends Canvas implements Runnable {
 
         // Clear & draw screen
         screen.clear();
-        level.render(xPos, yPos, screen);
+        level.render(player.x, player.y, screen);
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
         // Clear resoruces & show the buffer
@@ -134,19 +136,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void update() {
-        // Input
-        key.update();
-        if (key.up) {
-            yPos--;
-        }
-        if (key.down) {
-            yPos++;
-        }
-        if (key.left) {
-            xPos--;
-        }
-        if (key.right) {
-            xPos++;
-        }
+        keyboard.update();
+        player.update();
     }
 }

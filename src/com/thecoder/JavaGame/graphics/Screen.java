@@ -1,26 +1,18 @@
 package com.thecoder.JavaGame.graphics;
 
-import java.util.Random;
 import com.thecoder.JavaGame.graphics.level.tile.Tile;
+import com.thecoder.JavaGame.utils.Logger;
 
 public class Screen {
     public int width, height;
     public int[] pixels;
-    private final int MAP_SIZE = 64;
-    public int[] tiles = new int[MAP_SIZE * MAP_SIZE];
     public int xOffset, yOffset;
 
-    private Random random = new Random();
-
     public Screen(int width, int height, int[] pixels) {
+        Logger.log("Screen created");
         this.width = width;
         this.height = height;
         this.pixels = pixels;
-
-        // Create tiles
-        for (int i = 0; i < tiles.length; i++) {
-            tiles[i] = random.nextInt(0xffffff);
-        }
     }
 
     public void clear() {
@@ -34,9 +26,9 @@ public class Screen {
         xx -= xOffset;
         yy -= yOffset;
         // Loop for each pixel and set it to the sprite at the corresponding position
-        for(int y = 0; y < tile.sprite.SIZE; y++) {
+        for (int y = 0; y < tile.sprite.SIZE; y++) {
             int ya = yy + y;
-            for(int x = 0; x < tile.sprite.SIZE; x++) {
+            for (int x = 0; x < tile.sprite.SIZE; x++) {
                 int xa = xx + x;
                 if (xa < -tile.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
                 if (xa < 0) xa = 0;

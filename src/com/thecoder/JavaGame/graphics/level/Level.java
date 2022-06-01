@@ -2,6 +2,7 @@ package com.thecoder.JavaGame.graphics.level;
 
 import com.thecoder.JavaGame.graphics.Screen;
 import com.thecoder.JavaGame.graphics.level.tile.Tile;
+import com.thecoder.JavaGame.utils.Logger;
 
 public abstract class Level {
 
@@ -10,11 +11,13 @@ public abstract class Level {
 
     // Constructor for loading level
     public Level(String path) {
+        Logger.log("Loading level " + path);
         loadLevel(path);
     }
 
     // Constructor for random level
     public Level(int width, int height) {
+        Logger.log("Creating random level of size " + width + "x" + height);
         this.width = width;
         this.height = height;
         tiles = new int[width * height];
@@ -44,7 +47,9 @@ public abstract class Level {
 
     public Tile getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
-        if (tiles[x + y * width] == 0) return Tile.grass;
+        if (tiles[x + y * width] == 0) return Tile.grass1;
+        if (tiles[x + y * width] == 1) return Tile.grass2;
+        if (tiles[x + y * width] == 2) return Tile.grass3;
         return Tile.voidTile;
     }
 
