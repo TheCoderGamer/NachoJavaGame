@@ -41,7 +41,51 @@ public class Player extends Mob {
             moving = false;
         }
 
-        // TODO: Animation
+        // Animation
+        if (anim < 7500) anim++;
+        else anim = 0;
+        
+        if (dirX == 1) { // Right
+            if (moving) {
+                sprite = Sprite.playerRight1;
+                if (anim % 20 > 10) {
+                    sprite = Sprite.playerRight2;
+                } else {
+                    sprite = Sprite.playerRight3;
+                }
+            }
+        }
+        
+        if (dirX == -1) { // Left
+            sprite = Sprite.playerLeft1;
+            if (moving) {
+                if (anim % 20 > 10) {
+                    sprite = Sprite.playerLeft2;
+                } else {
+                    sprite = Sprite.playerLeft3;
+                }
+            }
+        }
+        if (dirY == 1) { // Up
+            if (moving) {
+                sprite = Sprite.playerUp1;
+                if (anim % 20 > 10) {
+                    sprite = Sprite.playerUp2;
+                } else {
+                    sprite = Sprite.playerUp3;
+                }
+            }
+        }
+        if (dirY == -1) { // Down
+            sprite = Sprite.playerDown1;
+            if (moving) {
+                if (anim % 20 > 10) {
+                    sprite = Sprite.playerDown2;
+                } else {
+                    sprite = Sprite.playerDown3;
+                }
+            }
+        }
     }
 
     @Override
