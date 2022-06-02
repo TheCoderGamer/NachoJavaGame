@@ -10,6 +10,8 @@ public abstract class Tile {
     public static Tile grass1 = new GrassTile(Sprite.grass1, false);
     public static Tile grass2 = new GrassTile(Sprite.grass2, false);
     public static Tile grass3 = new GrassTile(Sprite.grass3, false);
+    public static Tile grassflowers = new GrassTile(Sprite.grassflowers, false);
+    public static Tile grassrock = new GrassTile(Sprite.grassrock, false);
 
 
     public int x, y;

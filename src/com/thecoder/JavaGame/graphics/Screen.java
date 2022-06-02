@@ -1,5 +1,6 @@
 package com.thecoder.JavaGame.graphics;
 
+import com.thecoder.JavaGame.entity.mob.Player;
 import com.thecoder.JavaGame.graphics.level.tile.Tile;
 import com.thecoder.JavaGame.utils.Logger;
 
@@ -22,17 +23,34 @@ public class Screen {
         }
     }
 
-    public void renderTile(int xx, int yy, Tile tile) {
-        xx -= xOffset;
-        yy -= yOffset;
+    public void renderTile(int xp, int yp, Tile tile) {
+        xp -= xOffset;
+        yp -= yOffset;
         // Loop for each pixel and set it to the sprite at the corresponding position
         for (int y = 0; y < tile.sprite.SIZE; y++) {
-            int ya = yy + y;
+            int ya = yp + y;
             for (int x = 0; x < tile.sprite.SIZE; x++) {
-                int xa = xx + x;
+                int xa = xp + x;
                 if (xa < -tile.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
                 if (xa < 0) xa = 0;
                 pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.sprite.SIZE];
+            }
+        }
+    }
+
+    public void renderPlayer(int xp, int yp, Player player){
+        xp -= xOffset;
+        yp -= yOffset;
+        // Loop for each pixel and set it to the sprite at the corresponding position
+        for (int y = 0; y < player.sprite.SIZE; y++) {
+            int ya = yp + y;
+            for (int x = 0; x < player.sprite.SIZE; x++) {
+                int xa = xp + x;
+                if (xa < -player.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
+                if (xa < 0) xa = 0;
+                int pixel = player.sprite.pixels[x + y * player.sprite.SIZE];
+                if(pixel == 0XFFFF00FF) continue; // If pink pixel, skip it
+                pixels[xa + ya * width] = pixel;
             }
         }
     }

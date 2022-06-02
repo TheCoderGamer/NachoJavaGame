@@ -1,6 +1,7 @@
 package com.thecoder.JavaGame;
 
 import com.thecoder.JavaGame.entity.mob.Player;
+import com.thecoder.JavaGame.graphics.Camera;
 import com.thecoder.JavaGame.graphics.Screen;
 import com.thecoder.JavaGame.graphics.level.Level;
 import com.thecoder.JavaGame.graphics.level.RandomLevel;
@@ -9,10 +10,14 @@ import com.thecoder.JavaGame.utils.Logger;
 import javax.swing.JFrame;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.File;
+import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
     // Constants
@@ -33,6 +38,8 @@ public class Game extends Canvas implements Runnable {
     private Keyboard keyboard;
     private Level level;
     private Player player;
+    private Font font;
+    private Camera camera;
 
     public Game() {
         Logger.log("Starting game...");
@@ -55,14 +62,23 @@ public class Game extends Canvas implements Runnable {
         keyboard = new Keyboard();
         addKeyListener(keyboard);
 
+        // Level, player & camera
+        level = new RandomLevel(20, 20);
+        player = new Player(0, 0, keyboard);
+        camera = new Camera(player, screen);
+
+        // Font
+        try {
+            Font sourcefont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/monaco.ttf"));
+            font = sourcefont.deriveFont(Font.PLAIN, 24);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+
         // Game loop
         gameLoop = new Thread(this, "GameLoop");
         running = true;
         gameLoop.start();
-
-        // Level & player
-        level = new RandomLevel(64, 64);
-        player = new Player(0, 0, keyboard);
     }
 
     public void stop() {
@@ -117,20 +133,25 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void render() {
-        // Create buffer strategy & get graphics
+        // -- Create buffer strategy & get graphics --
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
             createBufferStrategy(3);
             return;
         }
         Graphics g = bs.getDrawGraphics();
+        g.setFont(font);
+        g.setColor(java.awt.Color.WHITE);
 
-        // Clear & draw screen
+
+        // -- Clear, render and draw screen --
         screen.clear();
-        level.render(player.x, player.y, screen);
+        level.render(camera.x, camera.y, screen);
+        player.render(screen);
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        g.drawString(String.format("%dX %dY", player.x, player.y), getWidth() - 155, 20);
 
-        // Clear resoruces & show the buffer
+        // -- Clear resoruces & show the buffer --
         g.dispose();
         bs.show();
     }
@@ -138,5 +159,6 @@ public class Game extends Canvas implements Runnable {
     private void update() {
         keyboard.update();
         player.update();
+        camera.update(level);
     }
 }

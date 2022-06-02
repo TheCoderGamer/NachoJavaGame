@@ -8,15 +8,17 @@ import com.thecoder.JavaGame.utils.Logger;
 public class SpriteSheet {
 
 	// SpriteSheets
-	public static SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 256);
+	public static SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 256, 16);
 
 	public int[] pixels;
 	private String path;
 	final int SIZE;
+	final int TILE_SIZE;
 	private int width, height;
 
-	public SpriteSheet(String path, int size) {
+	public SpriteSheet(String path, int size, int tileSize) {
 		this.path = path;
+		this.TILE_SIZE = tileSize;
 		SIZE = size;
 		pixels = new int[SIZE * SIZE];
 		load();

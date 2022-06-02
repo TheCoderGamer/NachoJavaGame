@@ -6,8 +6,9 @@ import com.thecoder.JavaGame.utils.Logger;
 
 public abstract class Level {
 
-    protected int width, height;
+    public int width, height;
     protected int[] tiles;
+    public int tileSize = 16;
 
     // Constructor for loading level
     public Level(String path) {
@@ -50,6 +51,8 @@ public abstract class Level {
         if (tiles[x + y * width] == 0) return Tile.grass1;
         if (tiles[x + y * width] == 1) return Tile.grass2;
         if (tiles[x + y * width] == 2) return Tile.grass3;
+        if (tiles[x + y * width] == 3) return Tile.grassflowers;
+        if (tiles[x + y * width] == 4) return Tile.grassrock;
         return Tile.voidTile;
     }
 
