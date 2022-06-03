@@ -5,8 +5,8 @@ import com.thecoder.JavaGame.graphics.Sprite;
 
 public class VoidTile extends Tile implements Tileable {
 
-    public VoidTile(Sprite sprite, boolean solid) {
-        super(sprite, solid);
+    public VoidTile(Sprite sprite, boolean solid, int ID) {
+        super(sprite, solid, ID);
     }
 
     @Override

@@ -1,19 +1,23 @@
 package com.thecoder.JavaGame.entity.mob;
 
+import com.thecoder.JavaGame.Game;
 import com.thecoder.JavaGame.graphics.Screen;
 import com.thecoder.JavaGame.graphics.Sprite;
 import com.thecoder.JavaGame.input.Keyboard;
+import com.thecoder.JavaGame.utils.Logger;
 
 public class Player extends Mob {
 
-    private int xa;
-    private int ya;
+    private int xa, ya;
     private Keyboard kb;
     public Sprite sprite = Sprite.playerDown1;
     private int anim;
+    public int speed = 60; // pixels per second
+    private int speedCounter = 0;
 
 
     public Player(int x, int y, Keyboard kb) {
+        Logger.log("Player created x: " + x + ", y: " + y + ", speed: " + speed + " pixels per second");
         this.x = x;
         this.y = y;
         this.kb = kb;
@@ -36,18 +40,24 @@ public class Player extends Mob {
         if (kb.left) xa--;
         if (kb.right) xa++;
         if (xa != 0 || ya != 0) {
-            move(xa, ya);
+            moving = true;
+            // Limit updates per second to control speed
+            if (speedCounter >= Game.WANTED_UPS / speed) {
+                speedCounter = 0;
+                move(xa, ya);
+            }
+            speedCounter++;
         } else {
             moving = false;
         }
 
         // Animation
-        if (anim < 7500) anim++;
+        if (anim < 7500 && moving) anim++;
         else anim = 0;
-        
+
         if (dirX == 1) { // Right
+            sprite = Sprite.playerRight1;
             if (moving) {
-                sprite = Sprite.playerRight1;
                 if (anim % 20 > 10) {
                     sprite = Sprite.playerRight2;
                 } else {
@@ -55,7 +65,7 @@ public class Player extends Mob {
                 }
             }
         }
-        
+
         if (dirX == -1) { // Left
             sprite = Sprite.playerLeft1;
             if (moving) {
@@ -67,8 +77,8 @@ public class Player extends Mob {
             }
         }
         if (dirY == 1) { // Up
+            sprite = Sprite.playerUp1;
             if (moving) {
-                sprite = Sprite.playerUp1;
                 if (anim % 20 > 10) {
                     sprite = Sprite.playerUp2;
                 } else {
@@ -90,8 +100,6 @@ public class Player extends Mob {
 
     @Override
     public void render(Screen screen) {
-        
-
         screen.renderPlayer(x, y, this);
     }
 

@@ -3,6 +3,7 @@ package com.thecoder.JavaGame;
 import com.thecoder.JavaGame.entity.mob.Player;
 import com.thecoder.JavaGame.graphics.Camera;
 import com.thecoder.JavaGame.graphics.Screen;
+import com.thecoder.JavaGame.graphics.level.HubLevel;
 import com.thecoder.JavaGame.graphics.level.Level;
 import com.thecoder.JavaGame.graphics.level.RandomLevel;
 import com.thecoder.JavaGame.input.Keyboard;
@@ -26,7 +27,8 @@ public class Game extends Canvas implements Runnable {
     private static final int WIDTH = 300;
     private static final int HEIGHT = WIDTH / 16 * 9;
     private static final int SCALE = 3;
-    private static final double WANTED_UPS = 60;
+    public static final double WANTED_UPS = 60;
+    private static final String FONT1 = "monaco.ttf";
 
     // Relations
     private boolean running = false;
@@ -62,18 +64,20 @@ public class Game extends Canvas implements Runnable {
         keyboard = new Keyboard();
         addKeyListener(keyboard);
 
-        // Level, player & camera
-        level = new RandomLevel(20, 20);
-        player = new Player(0, 0, keyboard);
-        camera = new Camera(player, screen);
-
         // Font
         try {
-            Font sourcefont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/monaco.ttf"));
+            Logger.log("Loading font " + FONT1);
+            Font sourcefont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/" + FONT1));
             font = sourcefont.deriveFont(Font.PLAIN, 24);
         } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
+            Logger.log("Error loading font " + FONT1, e);
         }
+
+        // Level, player & camera
+        player = new Player(0, 0, keyboard);
+        //level = new RandomLevel(20, 20);
+        level = new HubLevel("res/data/levels/hub.level");
+        camera = new Camera(player, screen);
 
         // Game loop
         gameLoop = new Thread(this, "GameLoop");
@@ -86,8 +90,7 @@ public class Game extends Canvas implements Runnable {
         try {
             gameLoop.join();
         } catch (InterruptedException e) {
-            Logger.log("Failure to stop game loop");
-            e.printStackTrace();
+            Logger.log("Failure to stop game loop", e);
         }
     }
 

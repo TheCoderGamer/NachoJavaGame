@@ -5,8 +5,8 @@ import com.thecoder.JavaGame.graphics.Sprite;
 
 public class GrassTile extends Tile implements Tileable {
 
-    public GrassTile(Sprite sprite, boolean solid) {
-        super(sprite, solid);
+    public GrassTile(Sprite sprite, boolean solid, int ID) {
+        super(sprite, solid, ID);
     }
 
     @Override
