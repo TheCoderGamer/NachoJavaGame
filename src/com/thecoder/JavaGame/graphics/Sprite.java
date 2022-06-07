@@ -1,7 +1,5 @@
 package com.thecoder.JavaGame.graphics;
 
-import java.awt.Color;
-
 public class Sprite {
     
     // Sprites

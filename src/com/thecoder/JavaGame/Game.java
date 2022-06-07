@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable {
     private Screen screen;
     private JFrame frame;
     private Keyboard keyboard;
-    private Level level;
+    private Level currentLevel;
     private Player player;
     private Font font;
     private Camera camera;
@@ -74,9 +74,9 @@ public class Game extends Canvas implements Runnable {
         }
 
         // Level, player & camera
-        player = new Player(0, 0, keyboard);
-        //level = new RandomLevel(20, 20);
-        level = new HubLevel("res/data/levels/hub.level");
+        player = new Player(5, 5, keyboard);
+        // currentLevel = new RandomLevel(20, 20);
+        currentLevel = new HubLevel("res/data/levels/hub.level");
         camera = new Camera(player, screen);
 
         // Game loop
@@ -149,7 +149,7 @@ public class Game extends Canvas implements Runnable {
 
         // -- Clear, render and draw screen --
         screen.clear();
-        level.render(camera.x, camera.y, screen);
+        currentLevel.render(camera.x, camera.y, screen);
         player.render(screen);
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.drawString(String.format("%dX %dY", player.x, player.y), getWidth() - 155, 20);
@@ -162,6 +162,6 @@ public class Game extends Canvas implements Runnable {
     private void update() {
         keyboard.update();
         player.update();
-        camera.update(level);
+        camera.update(currentLevel);
     }
 }

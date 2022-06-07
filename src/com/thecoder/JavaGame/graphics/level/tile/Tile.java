@@ -5,7 +5,7 @@ import com.thecoder.JavaGame.graphics.Screen;
 import com.thecoder.JavaGame.graphics.Sprite;
 
 public abstract class Tile {
-    
+
     // Tiles
     public static Tile voidTile = new VoidTile(Sprite.voidTile, false, -1);
     public static Tile grass1 = new GrassTile(Sprite.grass1, false, 1000);
@@ -29,10 +29,10 @@ public abstract class Tile {
         this.ID = ID;
     }
 
-    public static Tile randomChooseTile(Tile[] tileGroup){
+    public static Tile randomChooseTile(Tile[] tileGroup) {
         return tileGroup[random.nextInt(tileGroup.length)];
     }
 
     public abstract void render(int x, int y, Screen screen);
-    
+
 }

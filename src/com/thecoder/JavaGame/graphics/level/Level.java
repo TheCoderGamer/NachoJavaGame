@@ -63,7 +63,7 @@ public abstract class Level {
                 if (line.startsWith("#data")) {
                     tiles = new int[width * height];
                     // Loop for each line
-                    for(int y = 0; y < height; y++) {
+                    for (int y = 0; y < height; y++) {
                         line = sc.nextLine();
                         // Loop for each tile in line
                         for (int x = 0; x < line.length(); x++) {

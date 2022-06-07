@@ -38,7 +38,7 @@ public class Screen {
         }
     }
 
-    public void renderPlayer(int xp, int yp, Player player){
+    public void renderPlayer(int xp, int yp, Player player) {
         xp -= xOffset;
         yp -= yOffset;
         // Loop for each pixel and set it to the sprite at the corresponding position
@@ -49,7 +49,7 @@ public class Screen {
                 if (xa < -player.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
                 if (xa < 0) xa = 0;
                 int pixel = player.sprite.pixels[x + y * player.sprite.SIZE];
-                if(pixel == 0XFFFF00FF) continue; // If pink pixel, skip it
+                if (pixel == 0XFFFF00FF) continue; // If pink pixel, skip it
                 pixels[xa + ya * width] = pixel;
             }
         }
