@@ -22,6 +22,7 @@ public class Sprite {
     public static Sprite grass3 = new Sprite(16, 2, 0, SpriteSheet.tiles);
     public static Sprite grassflowers = new Sprite(16, 3, 0, SpriteSheet.tiles);
     public static Sprite grassrock = new Sprite(16, 4, 0, SpriteSheet.tiles);
+    public static Sprite brick1 = new Sprite(16, 8, 0, SpriteSheet.tiles);
     
 
     final int SIZE;

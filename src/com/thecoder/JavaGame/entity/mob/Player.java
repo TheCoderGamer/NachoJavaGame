@@ -1,8 +1,10 @@
 package com.thecoder.JavaGame.entity.mob;
 
 import com.thecoder.JavaGame.Game;
+import com.thecoder.JavaGame.graphics.Box;
 import com.thecoder.JavaGame.graphics.Screen;
 import com.thecoder.JavaGame.graphics.Sprite;
+import com.thecoder.JavaGame.graphics.level.TileCoordinate;
 import com.thecoder.JavaGame.input.Keyboard;
 import com.thecoder.JavaGame.utils.Logger;
 
@@ -17,17 +19,19 @@ public class Player extends Mob {
 
 
     public Player(int x, int y, Keyboard kb) {
+        createPlayer(x, y, kb);
+    }
+
+    public Player(TileCoordinate spawnPos, Keyboard kb) {
+        createPlayer(spawnPos.x, spawnPos.y, kb);
+    }
+
+    private void createPlayer(int x, int y, Keyboard kb) {
         Logger.log("Player created x: " + x + ", y: " + y + ", speed: " + speed + " pixels per second");
         this.x = x;
         this.y = y;
         this.kb = kb;
-    }
-
-
-    @Override
-    public boolean collision(int xa, int ya) {
-        return false;
-
+        collisionBox = new Box(x-6, y+6, x+6, y+12);
     }
 
     @Override
@@ -100,7 +104,9 @@ public class Player extends Mob {
 
     @Override
     public void render(Screen screen) {
-        screen.renderPlayer(x, y, this);
+        screen.renderPlayer(x-16, y-20, this);
+        screen.renderBox(collisionBox); // Debug
+        screen.renderDot(x, y); // Debug
     }
 
     @Override

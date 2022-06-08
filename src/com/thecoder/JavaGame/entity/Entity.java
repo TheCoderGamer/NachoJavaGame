@@ -9,6 +9,10 @@ public abstract class Entity {
     protected Level level;
     protected Random random = new Random();
 
+    public void init(Level level) {
+        this.level = level;
+    }
+
     public abstract void update();
 
     public abstract void render(Screen screen);

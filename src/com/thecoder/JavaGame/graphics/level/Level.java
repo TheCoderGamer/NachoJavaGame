@@ -9,7 +9,7 @@ import java.util.Scanner;
 public abstract class Level {
 
     public int width, height;
-    public int tileSize = 16;
+    public static int tileSize = 16;
     public String name = "NULL";
     public String description = "NULL";
     protected int[] tiles;
@@ -109,6 +109,7 @@ public abstract class Level {
         if (tile == Tile.grass3.ID) return Tile.grass3;
         if (tile == Tile.grassflowers.ID) return Tile.grassflowers;
         if (tile == Tile.grassrock.ID) return Tile.grassrock;
+        if (tile == Tile.brick1.ID) return Tile.brick1;
         return Tile.voidTile;
     }
 

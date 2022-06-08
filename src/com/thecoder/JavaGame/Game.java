@@ -6,6 +6,8 @@ import com.thecoder.JavaGame.graphics.Screen;
 import com.thecoder.JavaGame.graphics.level.HubLevel;
 import com.thecoder.JavaGame.graphics.level.Level;
 import com.thecoder.JavaGame.graphics.level.RandomLevel;
+import com.thecoder.JavaGame.graphics.level.TileCoordinate;
+import com.thecoder.JavaGame.graphics.level.tile.Tile;
 import com.thecoder.JavaGame.input.Keyboard;
 import com.thecoder.JavaGame.utils.Logger;
 import javax.swing.JFrame;
@@ -26,7 +28,7 @@ public class Game extends Canvas implements Runnable {
     private static final String TITLE = "TheCoder's Java Game";
     private static final int WIDTH = 300;
     private static final int HEIGHT = WIDTH / 16 * 9;
-    private static final int SCALE = 3;
+    private static final int SCALE = 4;
     public static final double WANTED_UPS = 60;
     private static final String FONT1 = "monaco.ttf";
 
@@ -42,6 +44,7 @@ public class Game extends Canvas implements Runnable {
     private Player player;
     private Font font;
     private Camera camera;
+    private TileCoordinate playerSpawn;
 
     public Game() {
         Logger.log("Starting game...");
@@ -74,9 +77,11 @@ public class Game extends Canvas implements Runnable {
         }
 
         // Level, player & camera
-        player = new Player(5, 5, keyboard);
+        playerSpawn = new TileCoordinate(4, 4);
         // currentLevel = new RandomLevel(20, 20);
         currentLevel = new HubLevel("res/data/levels/hub.level");
+        player = new Player(playerSpawn, keyboard);
+        player.init(currentLevel);
         camera = new Camera(player, screen);
 
         // Game loop
@@ -149,8 +154,10 @@ public class Game extends Canvas implements Runnable {
 
         // -- Clear, render and draw screen --
         screen.clear();
+        
         currentLevel.render(camera.x, camera.y, screen);
         player.render(screen);
+
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.drawString(String.format("%dX %dY", player.x, player.y), getWidth() - 155, 20);
 

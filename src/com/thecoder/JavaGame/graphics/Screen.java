@@ -55,6 +55,28 @@ public class Screen {
         }
     }
 
+    public void renderDot(int xp, int yp) {
+        xp -= xOffset;
+        yp -= yOffset;
+        pixels[xp + yp * width] = 0xFF00FF00;
+    }
+
+    public void renderBox(Box box) {
+        int xp = box.x1 - xOffset;
+        int yp = box.y1 - yOffset;
+        int xp2 = box.x2 - xOffset;
+        int yp2 = box.y2 - yOffset;
+
+        for (int x = xp; x <= xp2; x++) {
+            pixels[x + yp * width] = 0xFF00FFF0;
+            pixels[x + yp2 * width] = 0xFF00FFF0;
+        }
+        for (int y = yp; y <= yp2; y++) {
+            pixels[xp + y * width] = 0xFF00FFF0;
+            pixels[xp2 + y * width] = 0xFF00FFF0;
+        }
+    }
+
     public void setOffset(int xOffset, int yOffset) {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
