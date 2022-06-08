@@ -36,7 +36,8 @@ public abstract class Level {
     // Converts ID of tileGroup to random IDs of tiles of tileGroup
     private void randomizeGroupTiles() {
         for (int i = 0; i < tiles.length; i++) {
-            if (tiles[i] == 0) tiles[i] = Tile.randomChooseTile(Tile.grassTiles).ID;
+            if (tiles[i] == 0)
+                tiles[i] = Tile.randomChooseTile(Tile.grassTiles).ID;
         }
     }
 
@@ -66,10 +67,9 @@ public abstract class Level {
                     for (int y = 0; y < height; y++) {
                         line = sc.nextLine();
                         // Loop for each tile in line
-                        for (int x = 0; x < line.length(); x++) {
-                            int ID = Integer.parseInt(line.charAt(x) + "");
-                            tiles[x + y * width] = ID;
-
+                        String[] tileIDs = line.split(",");
+                        for (int x = 0; x < tileIDs.length; x++) {
+                            tiles[x + y * width] = Integer.parseInt(tileIDs[x]);
                         }
                     }
                 }
@@ -80,9 +80,11 @@ public abstract class Level {
         }
     }
 
-    protected void generateRandomLevel() {}
+    protected void generateRandomLevel() {
+    }
 
-    public void update() {}
+    public void update() {
+    }
 
     public void render(int xScroll, int yScroll, Screen screen) {
         screen.setOffset(xScroll, yScroll);
@@ -100,18 +102,27 @@ public abstract class Level {
     }
 
     public Tile getTile(int x, int y) {
-        if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
+        if (x < 0 || y < 0 || x >= width || y >= height)
+            return Tile.voidTile;
         int tile = tiles[x + y * width];
         // Convert ID of tile to tile
-        if (tile == Tile.voidTile.ID) return Tile.voidTile;
-        if (tile == Tile.grass1.ID) return Tile.grass1;
-        if (tile == Tile.grass2.ID) return Tile.grass2;
-        if (tile == Tile.grass3.ID) return Tile.grass3;
-        if (tile == Tile.grassflowers.ID) return Tile.grassflowers;
-        if (tile == Tile.grassrock.ID) return Tile.grassrock;
-        if (tile == Tile.brick1.ID) return Tile.brick1;
+        if (tile == Tile.voidTile.ID)
+            return Tile.voidTile;
+        if (tile == Tile.grass1.ID)
+            return Tile.grass1;
+        if (tile == Tile.grass2.ID)
+            return Tile.grass2;
+        if (tile == Tile.grass3.ID)
+            return Tile.grass3;
+        if (tile == Tile.grassflowers.ID)
+            return Tile.grassflowers;
+        if (tile == Tile.grassrock.ID)
+            return Tile.grassrock;
+        if (tile == Tile.brick1.ID)
+            return Tile.brick1;
         return Tile.voidTile;
     }
 
-    protected void time() {}
+    protected void time() {
+    }
 }
