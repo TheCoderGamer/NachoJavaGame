@@ -1,6 +1,11 @@
 package com.thecoder.JavaGame.entity.mob;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.thecoder.JavaGame.entity.Entity;
+import com.thecoder.JavaGame.entity.projectile.BulletProjectile;
+import com.thecoder.JavaGame.entity.projectile.Projectile;
 import com.thecoder.JavaGame.graphics.Box;
 import com.thecoder.JavaGame.graphics.Sprite;
 import com.thecoder.JavaGame.utils.Logger;
@@ -12,6 +17,8 @@ public abstract class Mob extends Entity {
     protected int dirY = 0; // 1 = up, -1 = down
     protected boolean moving = false;
     public Box collisionBox;
+
+    protected List<Projectile> projectiles = new ArrayList<Projectile>();
 
     public void move(int xa, int ya) {
         // Sets direction
@@ -66,5 +73,11 @@ public abstract class Mob extends Entity {
             }
         }
         return false;
+    }
+
+    protected void shoot(int x, int y, double dir){
+        Projectile p = new BulletProjectile(x, y, dir);
+        projectiles.add(p);
+        level.add(p);
     }
 }

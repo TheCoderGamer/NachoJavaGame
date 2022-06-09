@@ -3,6 +3,7 @@ package com.thecoder.JavaGame;
 import com.thecoder.JavaGame.utils.Logger;
 
 public class App {
+
     public static void main(String[] args) throws Exception {
         // Logger
         if (args.length == 2 && args[0].equals("-log")) {
@@ -23,6 +24,6 @@ public class App {
         Logger.debugInfo = true;
 
         // Starts game
-        new Game();
+        new Game().Start();;
     }
 }

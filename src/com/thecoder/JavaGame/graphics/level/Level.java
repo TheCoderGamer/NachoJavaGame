@@ -1,9 +1,13 @@
 package com.thecoder.JavaGame.graphics.level;
 
+import com.thecoder.JavaGame.entity.Entity;
+import com.thecoder.JavaGame.entity.projectile.Projectile;
 import com.thecoder.JavaGame.graphics.Screen;
 import com.thecoder.JavaGame.graphics.level.tile.Tile;
 import com.thecoder.JavaGame.utils.Logger;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public abstract class Level {
@@ -13,6 +17,7 @@ public abstract class Level {
     public String name = "NULL";
     public String description = "NULL";
     protected int[] tiles;
+    private List<Entity> entities = new ArrayList<Entity>();
 
     // Constructor for loading level
     public Level(String path) {
@@ -84,6 +89,9 @@ public abstract class Level {
     }
 
     public void update() {
+        for(Entity e : entities) {
+            e.update();
+        }
     }
 
     public void render(int xScroll, int yScroll, Screen screen) {
@@ -98,6 +106,9 @@ public abstract class Level {
             for (int x = x0; x < x1; x++) {
                 getTile(x, y).render(x, y, screen);
             }
+        }
+        for (Entity e : entities) {
+            e.render(screen);
         }
     }
 
@@ -124,5 +135,16 @@ public abstract class Level {
     }
 
     protected void time() {
+    }
+
+    public void removeEntity(Projectile projectile) {
+    }
+
+    public void add(Entity entity) {
+        entities.add(entity);
+    }
+
+    public void removeEntity(Entity entity) {
+        entities.remove(entity);
     }
 }

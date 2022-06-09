@@ -7,8 +7,8 @@ import com.thecoder.JavaGame.graphics.level.HubLevel;
 import com.thecoder.JavaGame.graphics.level.Level;
 import com.thecoder.JavaGame.graphics.level.RandomLevel;
 import com.thecoder.JavaGame.graphics.level.TileCoordinate;
-import com.thecoder.JavaGame.graphics.level.tile.Tile;
 import com.thecoder.JavaGame.input.Keyboard;
+import com.thecoder.JavaGame.input.Mouse;
 import com.thecoder.JavaGame.utils.Logger;
 import javax.swing.JFrame;
 import java.awt.Canvas;
@@ -46,7 +46,7 @@ public class Game extends Canvas implements Runnable {
     private Camera camera;
     private TileCoordinate playerSpawn;
 
-    public Game() {
+    public void Start() {
         Logger.log("Starting game...");
 
         // Window settings
@@ -63,9 +63,12 @@ public class Game extends Canvas implements Runnable {
         frame.setVisible(true);
         requestFocusInWindow();
 
-        // Keyboard settings
+        // Keyboard & Mouse settings
         keyboard = new Keyboard();
         addKeyListener(keyboard);
+        Mouse mouse = new Mouse();
+        addMouseListener(mouse);
+        addMouseMotionListener(mouse);
 
         // Font
         try {
@@ -157,7 +160,6 @@ public class Game extends Canvas implements Runnable {
         
         currentLevel.render(camera.x, camera.y, screen);
         player.render(screen);
-
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.drawString(String.format("%dX %dY", player.x, player.y), getWidth() - 155, 20);
 
@@ -170,5 +172,14 @@ public class Game extends Canvas implements Runnable {
         keyboard.update();
         player.update();
         camera.update(currentLevel);
+        currentLevel.update();
+    }
+
+    public static int getWindowWidth() {
+        return WIDTH * SCALE;
+    }
+    
+    public static int getWindowHeight() {
+        return HEIGHT * SCALE;
     }
 }

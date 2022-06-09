@@ -19,12 +19,17 @@ public class Camera {
         y = player.y - (screen.height / 2) + 16;
 
         // Keep the camera in bounds.
-        if (x < -16) x = -16;
-        if (y < -16) y = -16;
-        if (x > (level.width * level.tileSize) - screen.width + 16) x = (level.width * level.tileSize) - screen.width + 16;
-        if (y > (level.height * level.tileSize) - screen.height + 16) y = (level.height * level.tileSize) - screen.height + 16;
+        if (x < -16)
+            x = -16;
+        if (y < -16)
+            y = -16;
+        if (x > (level.width * Level.tileSize) - screen.width + 16)
+            x = (level.width * Level.tileSize) - screen.width + 16;
+        if (y > (level.height * Level.tileSize) - screen.height + 16)
+            y = (level.height * Level.tileSize) - screen.height + 16;
 
         // if level less wide than screen, center it
-        if (level.width * level.tileSize < screen.width) x = (level.width * level.tileSize / 2) - (screen.width / 2);
+        if (level.width * Level.tileSize < screen.width)
+            x = (level.width * Level.tileSize / 2) - (screen.width / 2);
     }
 }
