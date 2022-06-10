@@ -1,6 +1,5 @@
 package com.thecoder.JavaGame.entity.mob;
 
-import com.thecoder.JavaGame.App;
 import com.thecoder.JavaGame.Game;
 import com.thecoder.JavaGame.graphics.Box;
 import com.thecoder.JavaGame.graphics.Screen;
@@ -14,7 +13,6 @@ public class Player extends Mob {
 
     private int xa, ya;
     private Keyboard kb;
-    public Sprite sprite = Sprite.playerDown1;
     private int anim;
     public int speed = 60; // pixels per second
     private int speedCounter = 0;
@@ -29,6 +27,7 @@ public class Player extends Mob {
 
     private void createPlayer(int x, int y, Keyboard kb) {
         Logger.log("Player created x: " + x + ", y: " + y + ", speed: " + speed + " pixels per second");
+        sprite = Sprite.playerDown1;
         this.x = x;
         this.y = y;
         this.kb = kb;
@@ -37,7 +36,7 @@ public class Player extends Mob {
 
     @Override
     public void update() {
-        // Input
+        // Moving
         xa = 0;
         ya = 0;
         if (kb.up)
@@ -114,11 +113,20 @@ public class Player extends Mob {
 
     private void shootingManager() {
         if (Mouse.isLeftButtonPressed()) {
-            double dx = Mouse.getX() - Game.getWindowWidth() / 2;
-            double dy = Mouse.getY() - Game.getWindowHeight() / 2;
+            // Calculate mouse angle based on real player position on screen
+            double dx = (Mouse.getX() / Game.SCALE) - (x - Game.screen.xOffset);
+            double dy = (Mouse.getY() / Game.SCALE) - (y - Game.screen.yOffset);
             double dir = Math.atan2(dy, dx);
-            //dir = Math.toDegrees(dir);
+            // dir = Math.toDegrees(dir);
             shoot(x, y, dir);
+        }
+
+        // Clear
+        for (int i = 0; i < projectiles.size(); i++) {
+            if (projectiles.get(i).isRemoved()) {
+                level.removeEntity(projectiles.get(i));
+                projectiles.remove(projectiles.get(i));
+            }
         }
     }
 
@@ -131,7 +139,6 @@ public class Player extends Mob {
 
     @Override
     public void remove() {
-
     }
 
 }

@@ -1,5 +1,6 @@
 package com.thecoder.JavaGame.graphics;
 
+import com.thecoder.JavaGame.entity.Entity;
 import com.thecoder.JavaGame.entity.mob.Player;
 import com.thecoder.JavaGame.graphics.level.tile.Tile;
 import com.thecoder.JavaGame.utils.Logger;
@@ -23,9 +24,25 @@ public class Screen {
         }
     }
 
-    public void renderTile(int xp, int yp, Sprite sprite) {
+    public void renderTile(int xp, int yp, Tile tile) {
         xp -= xOffset;
         yp -= yOffset;
+        renderSprite(xp, yp, tile.sprite);
+    }
+
+    public void renderPlayer(int xp, int yp, Player player) {
+        xp -= xOffset;
+        yp -= yOffset;
+        renderSprite(xp, yp, player.sprite);
+    }
+
+    public void renderEntity(int xp, int yp, Entity entity) {
+        xp -= xOffset;
+        yp -= yOffset;
+        renderSprite(xp, yp, entity.sprite);
+    }
+    
+    private void renderSprite(int xp, int yp, Sprite sprite) {
         // Loop for each pixel and set it to the sprite at the corresponding position
         for (int y = 0; y < sprite.SIZE; y++) {
             int ya = yp + y;
@@ -33,22 +50,7 @@ public class Screen {
                 int xa = xp + x;
                 if (xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
                 if (xa < 0) xa = 0;
-                pixels[xa + ya * width] = sprite.pixels[x + y * sprite.SIZE];
-            }
-        }
-    }
-
-    public void renderPlayer(int xp, int yp, Player player) {
-        xp -= xOffset;
-        yp -= yOffset;
-        // Loop for each pixel and set it to the sprite at the corresponding position
-        for (int y = 0; y < player.sprite.SIZE; y++) {
-            int ya = yp + y;
-            for (int x = 0; x < player.sprite.SIZE; x++) {
-                int xa = xp + x;
-                if (xa < -player.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
-                if (xa < 0) xa = 0;
-                int pixel = player.sprite.pixels[x + y * player.sprite.SIZE];
+                int pixel = sprite.pixels[x + y * sprite.SIZE];
                 if (pixel == 0XFFFF00FF) continue; // If pink pixel, skip it
                 pixels[xa + ya * width] = pixel;
             }
@@ -80,5 +82,11 @@ public class Screen {
     public void setOffset(int xOffset, int yOffset) {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
+    }
+    public int getXOffset() {
+        return xOffset;
+    }
+    public int getYOffset() {
+        return yOffset;
     }
 }

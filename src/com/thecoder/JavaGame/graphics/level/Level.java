@@ -137,14 +137,11 @@ public abstract class Level {
     protected void time() {
     }
 
-    public void removeEntity(Projectile projectile) {
+    public void removeEntity(Entity entity) {
+        entities.remove(entity);
     }
 
     public void add(Entity entity) {
         entities.add(entity);
-    }
-
-    public void removeEntity(Entity entity) {
-        entities.remove(entity);
     }
 }

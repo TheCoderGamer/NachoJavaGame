@@ -15,8 +15,8 @@ public class Camera {
     }
 
     public void update(Level level) {
-        x = player.x - (screen.width / 2) + 16;
-        y = player.y - (screen.height / 2) + 16;
+        x = player.x - (screen.width / 2);
+        y = player.y - (screen.height / 2);
 
         // Keep the camera in bounds.
         if (x < -16)

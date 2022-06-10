@@ -7,12 +7,10 @@ import com.thecoder.JavaGame.entity.Entity;
 import com.thecoder.JavaGame.entity.projectile.BulletProjectile;
 import com.thecoder.JavaGame.entity.projectile.Projectile;
 import com.thecoder.JavaGame.graphics.Box;
-import com.thecoder.JavaGame.graphics.Sprite;
 import com.thecoder.JavaGame.utils.Logger;
 
 public abstract class Mob extends Entity {
 
-    public Sprite sprite;
     protected int dirX = 0; // -1 = left, 1 = right
     protected int dirY = 0; // 1 = up, -1 = down
     protected boolean moving = false;

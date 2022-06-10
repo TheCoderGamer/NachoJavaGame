@@ -26,9 +26,9 @@ public class Game extends Canvas implements Runnable {
     // Constants
     private static final long serialVersionUID = 1L;
     private static final String TITLE = "TheCoder's Java Game";
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = WIDTH / 16 * 9;
-    private static final int SCALE = 4;
+    public static final int WIDTH = 300;
+    public static final int HEIGHT = WIDTH / 16 * 9;
+    public static final int SCALE = 4;
     public static final double WANTED_UPS = 60;
     private static final String FONT1 = "monaco.ttf";
 
@@ -37,7 +37,7 @@ public class Game extends Canvas implements Runnable {
     private Thread gameLoop;
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-    private Screen screen;
+    public static Screen screen;
     private JFrame frame;
     private Keyboard keyboard;
     private Level currentLevel;
@@ -81,8 +81,8 @@ public class Game extends Canvas implements Runnable {
 
         // Level, player & camera
         playerSpawn = new TileCoordinate(4, 4);
-        // currentLevel = new RandomLevel(20, 20);
-        currentLevel = new HubLevel("res/data/levels/hub.level");
+        currentLevel = new RandomLevel(30, 30);
+        // currentLevel = new HubLevel("res/data/levels/hub.level");
         player = new Player(playerSpawn, keyboard);
         player.init(currentLevel);
         camera = new Camera(player, screen);

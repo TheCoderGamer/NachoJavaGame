@@ -1,5 +1,7 @@
 package com.thecoder.JavaGame.graphics;
 
+import com.thecoder.JavaGame.utils.Logger;
+
 public class Sprite {
     
     // Sprites
@@ -16,6 +18,8 @@ public class Sprite {
     public static Sprite playerLeft2 = new Sprite(32, 6, 12, SpriteSheet.tiles);
     public static Sprite playerLeft3 = new Sprite(32, 6, 14, SpriteSheet.tiles);
 
+    public static Sprite bullet1 = new Sprite(16, 15, 15, SpriteSheet.tiles);
+    
     public static Sprite voidTile = new Sprite(16, 0x505050);
     public static Sprite grass1 = new Sprite(16, 0, 0, SpriteSheet.tiles);
     public static Sprite grass2 = new Sprite(16, 1, 0, SpriteSheet.tiles);
@@ -24,8 +28,8 @@ public class Sprite {
     public static Sprite grassrock = new Sprite(16, 4, 0, SpriteSheet.tiles);
     public static Sprite brick1 = new Sprite(16, 8, 0, SpriteSheet.tiles);
     
-
-    final int SIZE;
+    
+    public final int SIZE;
     private int x, y;
     private int width, height;
     public int[] pixels;
@@ -39,7 +43,11 @@ public class Sprite {
 		this.x = x * sheet.TILE_SIZE;
 		this.y = y * sheet.TILE_SIZE;  
 		this.sheet = sheet;
-		load();
+		try {
+        load();
+        } catch (Exception e) {
+            Logger.log("Failed loading Sprite" , "ERROR");
+        }
 	}
     public Sprite(int size, int color){
         SIZE = size;
