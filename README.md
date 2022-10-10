@@ -1,7 +1,7 @@
 ## NachoJavaGame
 
 Un proyecto de videojuego realizado en Java, sin usar OpenGL, creando de 0.
-
+Usando multihilos
 
 ## Folder Structure
 
