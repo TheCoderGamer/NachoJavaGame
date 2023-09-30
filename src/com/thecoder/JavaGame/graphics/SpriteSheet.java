@@ -8,7 +8,7 @@ import com.thecoder.JavaGame.utils.Logger;
 public class SpriteSheet {
 
 	// SpriteSheets
-	public static SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 256, 16);
+	public static SpriteSheet tiles = new SpriteSheet("/res/textures/tiles.png", 256, 16);
 
 	public int[] pixels;
 	private String path;
